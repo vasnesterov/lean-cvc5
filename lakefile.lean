@@ -106,7 +106,7 @@ target ffi.o pkg : FilePath := do
     let srcJob ← inputBinFile <| pkg.dir / "ffi" / "ffi.cpp"
     let flags := #[
       "-std=c++17",
-      -- "-stdlib=libc++",
+      "-stdlib=libc++",
       "-I", (← getLeanIncludeDir).toString,
       "-I", (pkg.buildDir / s!"cvc5-{cvc5.target}" / "include").toString,
       "-fPIC"
