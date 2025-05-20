@@ -95,8 +95,8 @@ def Lake.compileStaticLib'
 
 /-- Build a static library from object file jobs using the `ar` packaged with Lean. -/
 def Lake.buildStaticLib'
-  (libFile : FilePath) (oFileJobs : Array (Job FilePath))
-: SpawnM (Job FilePath) :=
+  (libFile : FilePath) (oFileJobs : Array (BuildJob FilePath))
+: SpawnM (BuildJob FilePath) :=
   buildFileAfterDep libFile (.collectArray oFileJobs) fun oFiles => do
     compileStaticLib' libFile oFiles (← getLeanAr)
 
@@ -106,7 +106,7 @@ target ffi.o pkg : FilePath := do
     let srcJob ← inputBinFile <| pkg.dir / "ffi" / "ffi.cpp"
     let flags := #[
       "-std=c++17",
-      "-stdlib=libc++",
+      -- "-stdlib=libc++",
       "-I", (← getLeanIncludeDir).toString,
       "-I", (pkg.buildDir / s!"cvc5-{cvc5.target}" / "include").toString,
       "-fPIC"

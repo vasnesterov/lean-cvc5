@@ -197,13 +197,13 @@ instance : Ord cvc5.Sort := ⟨Sort.compare⟩
 instance : LT cvc5.Sort where
   lt := (Sort.blt · ·)
 
-instance : DecidableLT cvc5.Sort :=
+instance : DecidableRel (fun (x y : cvc5.Sort) => x < y) :=
   fun s1 s2 => if h : s1.blt s2 then .isTrue h else .isFalse h
 
 instance : LE cvc5.Sort where
   le := (Sort.ble · ·)
 
-instance : DecidableLE cvc5.Sort :=
+instance : DecidableRel (fun (x y : cvc5.Sort) => x ≤ y) :=
   fun s1 s2 => if h : s1.ble s2 then .isTrue h else .isFalse h
 
 /-- Hash function for cvc5 sorts. -/
